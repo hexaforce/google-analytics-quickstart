@@ -37,9 +37,3 @@ services:
       timeout: 10s
       retries: 3
     command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 app:app
-
-  react-nginx:
-    build: react-nginx
-    restart: always
-    ports:
-      - '3000:80'

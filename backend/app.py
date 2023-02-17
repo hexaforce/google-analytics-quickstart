@@ -10,13 +10,12 @@ app = Flask(__name__)
 api = Api(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(
-    os.getenv('DB_USER', 'flask'),
-    os.getenv('DB_PASSWORD', ''),
-    os.getenv('DB_HOST', 'mysql'),
-    os.getenv('DB_NAME', 'flask')
+    os.getenv('DB_HOST', 'db'),
+    os.getenv('DB_NAME', 'example'),
+    os.getenv('DB_USER', 'root'),
+    os.getenv('DB_PASSWORD', 'db-78n9n'),
 )
 db = SQLAlchemy(app)
-
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

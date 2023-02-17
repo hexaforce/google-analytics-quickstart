@@ -42,12 +42,6 @@ services:
     networks:
       - backnet
       - frontnet
-    environment:
-      # set database, memcached etc credentials
-      DB_HOST: db
-      DB_NAME: example
-      DB_USER: root
-      DB_PASSWORD: db-78n9n
     depends_on:
       db:
         condition: service_healthy
@@ -61,6 +55,8 @@ services:
       - backend
     networks:
       - frontnet
+    # volumes:
+    #   - ./frontend:/usr/share/nginx/html
 
 volumes:
   db-data:

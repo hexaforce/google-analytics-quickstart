@@ -1,14 +1,12 @@
 import os
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, Blueprint, request, jsonify
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
 from serializers import AlchemyEncoder
 
 app = Flask(__name__)
-api = Api(app)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),
     os.getenv('DB_PASSWORD', 'db-78n9n'),
@@ -46,9 +44,13 @@ class Index(Resource):
             )
         return ret, 200
 
-
+api = Api(app)
 api.add_resource(Index, '/')
 
+# api = Blueprint('api', __name__, url_prefix='/api')
+# @api.route('/users', methods=['GET'])
+# def list_user():
+#     return 'users'
 
 @app.route('/hello')
 def hello():

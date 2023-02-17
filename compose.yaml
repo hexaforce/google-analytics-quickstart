@@ -17,19 +17,19 @@ services:
       start_period: 30s
     secrets:
       - db-password
-    volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - backnet
     environment:
       - MYSQL_DATABASE=example
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
-    expose:
-      - 3306
-      - 33060
     ports:
       - 3306:3306
       - 33060:33060
+    # expose:
+    #   - 3306
+    #   - 33060
+    networks:
+      - backnet
+    volumes:
+      - db-data:/var/lib/mysql
 
   backend:
     build:
@@ -40,6 +40,8 @@ services:
       - db-password
     ports:
       - 8000:8000
+    # expose:
+    #   - 8000
     networks:
       - backnet
       - frontnet

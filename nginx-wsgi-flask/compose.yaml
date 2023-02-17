@@ -4,7 +4,7 @@ services:
     build: nginx-proxy
     restart: always
     volumes:
-      - ./nginx/default.conf:/tmp/default.conf
+      - ./nginx-proxy/default.conf:/tmp/default.conf
     environment:
       - FLASK_SERVER_ADDR=flask-app:8000
     ports:

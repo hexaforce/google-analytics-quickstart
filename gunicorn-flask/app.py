@@ -1,33 +1,34 @@
 import os
 import json
-from flask import Flask, Blueprint, request, jsonify
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
+from model import db, User
+from google.analytics import analytics_api
+from google.analytics_data import analytics_data_api
+from google.analytics_admin import analytics_admin_api
 
-from api.analytics import analytics_api
-from api.analytics_data import analytics_data_api
-from api.analytics_admin import analytics_admin_api
-
-app = Flask(__name__)
-app.register_blueprint(analytics_api)
-app.register_blueprint(analytics_data_api)
-app.register_blueprint(analytics_admin_api)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(
+SQLALCHEMY_DATABASE_URI='mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),
     os.getenv('DB_PASSWORD', 'db-78n9n'),
     os.getenv('DB_HOST', 'mariadb'),
     os.getenv('DB_NAME', 'analytics')
 )
-db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+# create the app
+app = Flask(__name__)
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+# configure the SQLite database, relative to the app instance folder
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# initialize the app with the extension
+db.init_app(app)
+
+app.register_blueprint(analytics_api)
+app.register_blueprint(analytics_data_api)
+app.register_blueprint(analytics_admin_api)
+
 
 # create the DB on demand
 @app.before_first_request
@@ -49,12 +50,10 @@ class Index(Resource):
         return ret, 200
 
 api = Api(app)
+
+# api.init_app()
 api.add_resource(Index, '/api/user')
 
-# bp = Blueprint('api', __name__, url_prefix='/api')
-# @bp.route('/flask-health-check', methods=['GET'])
-# def list_user():
-# 	return "success2"
 
 @app.route('/')
 def hello():
@@ -75,6 +74,40 @@ def info():
 	}
 
 	return jsonify(resp)
+
+# @app.route("/users")
+# def user_list():
+#     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
+#     return render_template("user/list.html", users=users)
+
+# @app.route("/users/create", methods=["GET", "POST"])
+# def user_create():
+#     if request.method == "POST":
+#         user = User(
+#             username=request.form["username"],
+#             email=request.form["email"],
+#         )
+#         db.session.add(user)
+#         db.session.commit()
+#         return redirect(url_for("user_detail", id=user.id))
+
+#     return render_template("user/create.html")
+
+# @app.route("/user/<int:id>")
+# def user_detail(id):
+#     user = db.get_or_404(User, id)
+#     return render_template("user/detail.html", user=user)
+
+# @app.route("/user/<int:id>/delete", methods=["GET", "POST"])
+# def user_delete(id):
+#     user = db.get_or_404(User, id)
+
+#     if request.method == "POST":
+#         db.session.delete(user)
+#         db.session.commit()
+#         return redirect(url_for("user_list"))
+
+#     return render_template("user/delete.html", user=user)
 
 @app.route('/flask-health-check')
 def flask_health_check():

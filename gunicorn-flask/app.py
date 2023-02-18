@@ -4,9 +4,15 @@ from flask import Flask, Blueprint, request, jsonify
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
-from serializers import AlchemyEncoder
+from api.analytics import analytics_api
+from api.analytics_data import analytics_data_api
+from api.analytics_admin import analytics_admin_api
 
 app = Flask(__name__)
+app.register_blueprint(analytics_api)
+app.register_blueprint(analytics_data_api)
+app.register_blueprint(analytics_admin_api)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),
     os.getenv('DB_PASSWORD', 'db-78n9n'),

@@ -17,8 +17,7 @@ def get_service(api_name, api_version, scopes, key_file_location):
         A service that is connected to the specified API.
     """
 
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            key_file_location, scopes=scopes)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes=scopes)
 
     # Build the service object.
     service = build(api_name, api_version, credentials=credentials)

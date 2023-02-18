@@ -4,7 +4,7 @@
 pip3 install virtualenv
 virtualenv .venv
 source .venv/bin/activate
-.venv/bin/pip install -r backend/requirements.txt
+.venv/bin/pip install -r gunicorn-flask/requirements.txt
 ```
 
 ```

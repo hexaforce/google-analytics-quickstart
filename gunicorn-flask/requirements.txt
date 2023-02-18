@@ -12,3 +12,6 @@ MarkupSafe==2.1.2
 pytz==2022.7.1
 six==1.16.0
 Werkzeug==2.2.3
+google-analytics-data==0.16.1
+google-auth-oauthlib==1.0.0
+google-api-python-client==2.78.0

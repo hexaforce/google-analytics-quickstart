@@ -4,7 +4,9 @@ from model import db
 from restful import api 
 from google import analytics
 from serializers import AlchemyEncoder
-from sqlalchemy.sql import text
+from sqlalchemy.sql import text, func
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI='mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),

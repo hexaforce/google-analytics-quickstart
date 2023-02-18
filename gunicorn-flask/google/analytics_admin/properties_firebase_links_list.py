@@ -28,7 +28,7 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID (e.g. "123456") before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     list_firebase_links(property_id)
 
 

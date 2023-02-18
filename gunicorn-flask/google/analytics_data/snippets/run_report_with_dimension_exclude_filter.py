@@ -38,11 +38,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_report_with_dimension_exclude_filter(property_id)
 
 
-def run_report_with_dimension_exclude_filter(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_report_with_dimension_exclude_filter(property_id="354244385"):
     """Runs a report using a filter with `not_expression`. The dimension filter
     selects for when `pageTitle` is not `My Homepage`.
 

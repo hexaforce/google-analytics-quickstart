@@ -37,11 +37,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_report_with_ordering(property_id)
 
 
-def run_report_with_ordering(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_report_with_ordering(property_id="354244385"):
     """Runs a report of active users grouped by three dimensions, ordered by
     the total revenue in descending order."""
     client = BetaAnalyticsDataClient()

@@ -41,11 +41,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_funnel_report(property_id)
 
 
-def run_funnel_report(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_funnel_report(property_id="354244385"):
     """Runs a funnel query to build a report with 5 funnel steps.
       Step 1: First open/visit (event name is `first_open` or `first_visit`).
       Step 2: Organic visitors (`firstUserMedium` dimension contains the term

@@ -40,11 +40,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_report_with_dimension_and_metric_filters(property_id)
 
 
-def run_report_with_dimension_and_metric_filters(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_report_with_dimension_and_metric_filters(property_id="354244385"):
     """Runs a report using both metric and dimension filters. A dimension filter
     limits the report to include only users who made an in-app purchase using
     Android platform. A metric filter specifies that only users with session

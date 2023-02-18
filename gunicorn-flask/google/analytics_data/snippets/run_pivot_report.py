@@ -36,11 +36,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_pivot_report(property_id)
 
 
-def run_pivot_report(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_pivot_report(property_id="354244385"):
     """Runs a pivot query to build a report of session counts by country,
     pivoted by the browser dimension."""
     client = BetaAnalyticsDataClient()

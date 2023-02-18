@@ -20,7 +20,7 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import RunReportRequest
 
 
-def run_report_with_custom_parameters(property_id="YOUR-GA4-PROPERTY-ID"):
+def run_report_with_custom_parameters(property_id="354244385"):
     """Runs a simple report on a Google Analytics 4 property."""
     client = BetaAnalyticsDataClient()
 
@@ -37,5 +37,5 @@ def run_report_with_custom_parameters(property_id="YOUR-GA4-PROPERTY-ID"):
 if __name__ == "__main__":
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
     run_report_with_custom_parameters(property_id)

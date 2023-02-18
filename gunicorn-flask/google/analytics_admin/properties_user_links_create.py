@@ -35,7 +35,7 @@ def run_sample():
 
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID (e.g. "123456") before running the sample.
-    property_id = "YOUR-GA4-PROPERTY-ID"
+    property_id = "354244385"
 
     # TODO(developer): Replace this variable with an email address of the user to
     #  link. This user will be given access to your account after running the

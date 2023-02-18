@@ -35,11 +35,11 @@ from google.analytics.data_v1beta.types import (
 from google_auth_oauthlib import flow
 
 
-def sample_run_report(credentials=None, property_id="YOUR-GA4-PROPERTY-ID"):
+def sample_run_report(credentials=None, property_id="354244385"):
     """Runs a simple report on a Google Analytics 4 property."""
     # TODO(developer): Uncomment this variable and replace with your
     #  Google Analytics 4 property ID before running the sample.
-    # property_id = "YOUR-GA4-PROPERTY-ID"
+    # property_id = "354244385"
 
     client = BetaAnalyticsDataClient(credentials=credentials)
     request = RunReportRequest(

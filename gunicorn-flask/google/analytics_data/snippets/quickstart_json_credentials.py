@@ -37,11 +37,11 @@ from google.analytics.data_v1beta.types import (
 )
 
 
-def sample_run_report(property_id="YOUR-GA4-PROPERTY-ID", credentials_json_path=""):
+def sample_run_report(property_id="354244385", credentials_json_path=""):
     """Runs a simple report on a Google Analytics 4 property."""
     # TODO(developer): Uncomment this variable and replace with your
     #  Google Analytics 4 property ID before running the sample.
-    # property_id = "YOUR-GA4-PROPERTY-ID"
+    # property_id = "354244385"
 
     # [START analyticsdata_json_credentials_initialize]
     # TODO(developer): Uncomment this variable and replace with a valid path to

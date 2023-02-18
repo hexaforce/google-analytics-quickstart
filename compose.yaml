@@ -46,7 +46,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --silent --fail localhost:8000/api/flask-health-check || exit 1"
+          "curl --silent --fail localhost:8000/flask-health-check || exit 1"
         ]
       interval: 10s
       timeout: 10s
@@ -63,7 +63,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - gunicorn-flask
+      gunicorn-flask:
+        condition: service_healthy
     networks:
       - frontnet
     healthcheck:

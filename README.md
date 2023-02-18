@@ -17,4 +17,5 @@ export GOOGLE_APPLICATION_CREDENTIALS="/Users/hexaforce/google-analytics-quickst
 
 ```
 python gunicorn-flask/google/analytics_data/snippets/quickstart.py
+python gunicorn-flask/google/HelloAnalytics.py
 ```

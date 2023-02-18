@@ -6,11 +6,9 @@ FROM node:lts AS development
 # Set working directory
 WORKDIR /app
 
-# 
+# Same as npm install
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
-
-# Same as npm install
 RUN npm ci
 
 COPY . /app

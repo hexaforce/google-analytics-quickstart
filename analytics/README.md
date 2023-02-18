@@ -23,16 +23,16 @@ Project structure:
 
 ```yml
 services:
-  nginx-proxy:
+  nginx-react:
     build: nginx
     ports:
     - 80:80
-  flask-app:
+  gunicorn-flask:
     build: flask
     ...
 ```
 
-The compose file defines an application with two services `nginx-proxy` and `flask-app`.
+The compose file defines an application with two services `nginx-react` and `gunicorn-flask`.
 When deploying the application, docker compose maps port 80 of the web service container to port 80 of the host as specified in the file.
 
 Make sure port 80 on the host is not being used by another container, otherwise the port should be changed.
@@ -42,12 +42,12 @@ Make sure port 80 on the host is not being used by another container, otherwise 
 ```bash
 $ docker compose up -d
 Creating network "nginx-wsgi-flask_default" with the default driver
-Building flask-app
+Building gunicorn-flask
 ...
-Building nginx-proxy
+Building nginx-react
 ...
-Creating nginx-wsgi-flask_flask-app_1 ... done
-Creating nginx-wsgi-flask_nginx-proxy_1 ... done
+Creating nginx-wsgi-flask_gunicorn-flask_1 ... done
+Creating nginx-wsgi-flask_nginx-react_1 ... done
 ```
 
 ## Expected result
@@ -57,8 +57,8 @@ Listing containers must show two containers running and the port mapping as belo
 ```bash
 $ docker ps
 CONTAINER ID   IMAGE            COMMAND                  CREATED              STATUS                        PORTS                              NAMES
-bde3f29cf571   ...nginx-proxy   "/docker-entrypoint.…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:80->80/tcp                 ...nginx-proxy_1
-86c44470b547   ...flask-app     "gunicorn -w 3 -t 60…"   About a minute ago   Up About a minute (healthy)   5000/tcp, 0.0.0.0:8000->8000/tcp   ...flask-app_1
+bde3f29cf571   ...nginx-react   "/docker-entrypoint.…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:80->80/tcp                 ...nginx-react_1
+86c44470b547   ...gunicorn-flask     "gunicorn -w 3 -t 60…"   About a minute ago   Up About a minute (healthy)   5000/tcp, 0.0.0.0:8000->8000/tcp   ...gunicorn-flask_1
 ```
 
 After the application starts, navigate to `http://localhost:80` in your web browser or run:
@@ -72,10 +72,10 @@ Stop and remove the containers
 
 ```bash
 $ docker compose down
-Stopping nginx-wsgi-flask_nginx-proxy_1 ... done
-Stopping nginx-wsgi-flask_flask-app_1   ... done
-Removing nginx-wsgi-flask_nginx-proxy_1 ... done
-Removing nginx-wsgi-flask_flask-app_1   ... done
+Stopping nginx-wsgi-flask_nginx-react_1 ... done
+Stopping nginx-wsgi-flask_gunicorn-flask_1   ... done
+Removing nginx-wsgi-flask_nginx-react_1 ... done
+Removing nginx-wsgi-flask_gunicorn-flask_1   ... done
 Removing network nginx-wsgi-flask_default
 ```
 

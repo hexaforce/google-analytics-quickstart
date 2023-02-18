@@ -1,16 +1,16 @@
 services:
 
-  nginx-proxy:
-    build: nginx-proxy
+  nginx-react:
+    build: nginx-react
     restart: always
     volumes:
-      - ./nginx-proxy/default.conf:/tmp/default.conf
+      - ./nginx-react/default.conf:/tmp/default.conf
     environment:
-      - FLASK_SERVER_ADDR=flask-app:8000
+      - FLASK_SERVER_ADDR=gunicorn-flask:8000
     ports:
       - "80:80"
     depends_on:
-      - flask-app
+      - gunicorn-flask
     networks:
       - frontnet
     healthcheck:
@@ -24,8 +24,8 @@ services:
       retries: 3
     command: /app/start.sh
 
-  flask-app:
-    build: flask-app
+  gunicorn-flask:
+    build: gunicorn-flask
     restart: always
     ports:
       - '8000:8000'

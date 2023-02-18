@@ -1,13 +1,12 @@
-from flask_restful import Resource, Api
+from flask import Flask, request
+from flask_restful import Resource, Api, reqparse
 from model import db, User
 
 api = Api()
+parser = reqparse.RequestParser()
 
 class Index(Resource):
     def get(self):
-        users = db.session.execute(db.select(User).order_by(User.username)).scalars()
-        print(users)
-        
         ret = []
         res = User.query.all()
         for user in res:
@@ -20,6 +19,30 @@ class Index(Resource):
         return ret, 200
 
 api.add_resource(Index, '/api/user')
+
+class QueryResource(Resource):
+    def get(self):
+        query_string = request.query_string
+        param = request.args.get('param')
+        return {
+            'query_string':  query_string.decode('utf-8'),
+            'param': param
+        }
+
+api.add_resource(QueryResource, '/api/get')
+
+class PostResource(Resource):
+    def post(self):
+        json = request.get_json(force = True)
+        return { 'json_request': json }
+
+api.add_resource(PostResource, '/api/post')
+
+class VariableRouting(Resource):
+    def get(self, id):
+        return { 'id': id }
+
+api.add_resource(VariableRouting, '/api/var/<string:id>')
 
 # @app.route("/users")
 # def user_list():

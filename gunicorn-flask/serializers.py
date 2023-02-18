@@ -23,5 +23,6 @@ class AlchemyEncoder(json.JSONEncoder):
             return fields
         return json.JSONEncoder.default(self, obj)
 
+# from serializers import AlchemyEncoder
 # c = YourAlchemyClass()
 # print json.dumps(c, cls=AlchemyEncoder)

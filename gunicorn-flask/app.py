@@ -2,9 +2,9 @@ import os
 from flask import Flask, request, jsonify
 from model import db
 from restful import api 
-from google.analytics import analytics_api
-from google.analytics_data import analytics_data_api
-from google.analytics_admin import analytics_admin_api
+from google import analytics
+from serializers import AlchemyEncoder
+from sqlalchemy.sql import text
 
 SQLALCHEMY_DATABASE_URI='mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),
@@ -26,36 +26,19 @@ db.init_app(app)
 # initialize the app with the Resource API extension
 api.init_app(app)
 
-# register_blueprint
-app.register_blueprint(analytics_api)
-app.register_blueprint(analytics_data_api)
-app.register_blueprint(analytics_admin_api)
+# regist google analytics blueprint
+app.register_blueprint(analytics)
 
 # create the DB on demand
 @app.before_first_request
 def create_tables():
     db.create_all()
 
-# @app.route('/')
-# def hello():
-# 	return "Hello World!"
-
-# @app.route('/cache-me')
-# def cache():
-# 	return "nginx will cache this response"
-
-# @app.route('/info')
-# def info():
-
-# 	resp = {
-# 		'connecting_ip': request.headers['X-Real-IP'],
-# 		'proxy_ip': request.headers['X-Forwarded-For'],
-# 		'host': request.headers['Host'],
-# 		'user-agent': request.headers['User-Agent']
-# 	}
-
-# 	return jsonify(resp)
-
+# responding to health checks
 @app.route('/flask-health-check')
 def flask_health_check():
-	return "success"
+  db.session.execute(text('SELECT now()'))
+  return "success"
+
+if __name__ == '__main__':
+    app.run(debug = True)

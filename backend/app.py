@@ -47,10 +47,10 @@ class Index(Resource):
 api = Api(app)
 api.add_resource(Index, '/')
 
-# api = Blueprint('api', __name__, url_prefix='/api')
-# @api.route('/users', methods=['GET'])
-# def list_user():
-#     return 'users'
+bp = Blueprint('api', __name__, url_prefix='/api')
+@bp.route('/users', methods=['GET'])
+def list_user():
+    return 'users'
 
 @app.route('/hello')
 def hello():
@@ -78,3 +78,4 @@ def flask_health_check():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=False)
+

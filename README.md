@@ -12,7 +12,7 @@ docker compose up -d --build
 ```
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/hexaforce/google-analytics-quickstart/Quickstart-30b4c8d1a1b0.json"
+export GOOGLE_APPLICATION_CREDENTIALS="gunicorn-flask/google/Quickstart-30b4c8d1a1b0.json"
 ```
 
 ```

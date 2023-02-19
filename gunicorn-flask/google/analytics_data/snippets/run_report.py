@@ -35,11 +35,11 @@ def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics 4
     #  property ID before running the sample.
-    property_id = "354244385"
+    property_id = "354149023"
     run_report(property_id)
 
 
-def run_report(property_id="354244385"):
+def run_report(property_id):
     """Runs a report of active users grouped by country."""
     client = BetaAnalyticsDataClient()
 

@@ -1,36 +1,19 @@
 """A simple example of how to access the Google Analytics API."""
 
-from apiclient.discovery import build
+from apiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 
-def get_service(api_name, api_version, scopes, key_file_location):
-    """Get a service that communicates to a Google API.
-
-    Args:
-        api_name: The name of the api to connect to.
-        api_version: The api version to connect to.
-        scopes: A list auth scopes to authorize for the application.
-        key_file_location: The path to a valid service account JSON key file.
-
-    Returns:
-        A service that is connected to the specified API.
-    """
-
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes=scopes)
-
-    # Build the service object.
-    service = build(api_name, api_version, credentials=credentials)
-
-    return service
-
+SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
+KEY_FILE_LOCATION = '/Users/hexaforce/google-analytics-quickstart/poc-project-378209-692a4ccc16e8.json'
+credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
 
 def get_first_profile_id(service):
     # Use the Analytics service object to get the first profile id.
 
     # Get a list of all Google Analytics accounts for this user
     accounts = service.management().accounts().list().execute()
-    print(json.dumps(accounts, indent=2))
+    # print(json.dumps(accounts, indent=2))
 
     if accounts.get('items'):
         # Get the first Google Analytics account.
@@ -38,7 +21,7 @@ def get_first_profile_id(service):
 
         # Get a list of all the properties for the first account.
         properties = service.management().webproperties().list(accountId=account).execute()
-        print(json.dumps(properties, indent=2))
+        # print(json.dumps(properties, indent=2))
 
         if properties.get('items'):
             # Get the first property id.
@@ -46,7 +29,7 @@ def get_first_profile_id(service):
 
             # Get a list of all views (profiles) for the first property.
             profiles = service.management().profiles().list(accountId=account, webPropertyId=property).execute()
-            print(json.dumps(profiles, indent=2))
+            # print(json.dumps(profiles, indent=2))
 
             if profiles.get('items'):
                 # return the first view (profile) id.
@@ -55,42 +38,12 @@ def get_first_profile_id(service):
     return None
 
 
-def get_results(service, profile_id):
-    # Use the Analytics Service Object to query the Core Reporting API
-    # for the number of sessions within the past seven days.
-    return service.data().ga().get(
-            ids='ga:' + profile_id,
-            start_date='7daysAgo',
-            end_date='today',
-            metrics='ga:sessions').execute()
-
-
-def print_results(results):
-    pass
-    # Print data nicely for the user.
-    # if results:
-    #     print 'View (Profile):', results.get('profileInfo').get('profileName')
-    #     print 'Total Sessions:', results.get('rows')[0][0]
-
-    # else:
-    #     print 'No results found'
-
-
 def main():
-    # Define the auth scopes to request.
-    scope = 'https://www.googleapis.com/auth/analytics.readonly'
-    key_file_location = '/Users/hexaforce/google-analytics-quickstart/poc-project-378209-692a4ccc16e8.json'
-
     # Authenticate and construct service.
-    service = get_service(
-            api_name='analytics',
-            api_version='v3',
-            scopes=[scope],
-            key_file_location=key_file_location)
-
+    service = discovery.build('analytics', 'v3', credentials=credentials)
     profile_id = get_first_profile_id(service)
-    print_results(get_results(service, profile_id))
-
+    result = service.data().ga().get( ids=f'ga:{profile_id}', start_date='7daysAgo', end_date='today', metrics='ga:sessions').execute()
+    print(json.dumps(result, indent=2))
 
 if __name__ == '__main__':
     main()

@@ -13,6 +13,7 @@ pytz==2022.7.1
 six==1.16.0
 Werkzeug==2.2.3
 google-analytics-data==0.16.1
+google-analytics-admin==0.14.1
 google-auth-oauthlib==1.0.0
 google-api-python-client==2.78.0
 apiclient==1.0.4

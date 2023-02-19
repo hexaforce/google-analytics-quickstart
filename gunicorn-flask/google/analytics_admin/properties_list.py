@@ -24,17 +24,17 @@ for more information.
 # [START analyticsadmin_properties_list]
 from google.analytics.admin import AnalyticsAdminServiceClient
 from google.analytics.admin_v1alpha.types import ListPropertiesRequest
-
+from google.analytics.admin_v1alpha.services.analytics_admin_service.pagers import ListPropertiesPager
 
 def run_sample():
     """Runs the sample."""
     # TODO(developer): Replace this variable with your Google Analytics
     #  account ID (e.g. "123456") before running the sample.
-    account_id = "YOUR-GA-ACCOUNT-ID"
+    account_id = "257580860"
     list_properties(account_id)
 
 
-def list_properties(account_id: str, transport: str = None):
+def list_properties(account_id: str, transport: str = None) -> ListPropertiesPager:
     """
     Lists Google Analytics 4 properties under the specified parent account
     that are available to the current user.
@@ -49,10 +49,12 @@ def list_properties(account_id: str, transport: str = None):
         ListPropertiesRequest(filter=f"parent:accounts/{account_id}", show_deleted=True)
     )
 
-    print("Result:")
-    for property_ in results:
-        print(property_)
-        print()
+    # print(type(results))
+    # print("Result:")
+    # for property_ in results:
+    #     print(property_)
+    #     print()
+    return results
 
 
 # [END analyticsadmin_properties_list]

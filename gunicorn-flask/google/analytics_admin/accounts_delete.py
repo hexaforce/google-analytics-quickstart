@@ -34,7 +34,7 @@ def run_sample():
 
     # TODO(developer): Replace this variable with your Google Analytics
     #  account ID (e.g. "123456") before running the sample.
-    account_id = "YOUR-GA-ACCOUNT-ID"
+    account_id = "257580860"
     delete_account(account_id)
 
 

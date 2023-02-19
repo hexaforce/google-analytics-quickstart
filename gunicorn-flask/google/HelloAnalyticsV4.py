@@ -1,27 +1,18 @@
 """Hello Analytics Reporting API V4."""
 
-from apiclient.discovery import build
+from apiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 
+# https://www.googleapis.com/auth/analytics.readonly	アナリティクス API に対する読み取り専用のアクセス。
+# https://www.googleapis.com/auth/analytics.edit	Google アナリティクスの管理エンティティの編集。
+# https://www.googleapis.com/auth/analytics.manage.users	Google アナリティクス アカウントのユーザー権限の表示と管理。
+# https://www.googleapis.com/auth/analytics.manage.users.readonly	Google アナリティクスのユーザー権限の表示。
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = '/Users/hexaforce/google-analytics-quickstart/poc-project-378209-692a4ccc16e8.json'
+credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
+
 VIEW_ID = '284918370'
-
-
-def initialize_analyticsreporting():
-  """Initializes an Analytics Reporting API V4 service object.
-
-  Returns:
-    An authorized Analytics Reporting API V4 service object.
-  """
-  credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
-
-  # Build the service object.
-  analytics = build('analyticsreporting', 'v4', credentials=credentials)
-
-  return analytics
-
 
 def get_report(analytics):
   """Queries the Analytics Reporting API V4.
@@ -69,7 +60,7 @@ def print_response(response):
 
 
 def main():
-  analytics = initialize_analyticsreporting()
+  analytics = discovery.build('analyticsreporting', 'v4', credentials=credentials)
   response = get_report(analytics)
   print(json.dumps(response, indent=2))
   print_response(response)

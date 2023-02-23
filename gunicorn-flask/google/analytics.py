@@ -86,6 +86,6 @@ def get_report(analytics, viewId):
   ).execute()
 
 
-if __name__ == '__main__':
-  analytics_v3()
+# if __name__ == '__main__':
+#   analytics_v3()
   # analytics_v4()

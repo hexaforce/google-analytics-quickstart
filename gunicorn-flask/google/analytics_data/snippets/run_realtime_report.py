@@ -39,7 +39,7 @@ def run_sample():
     run_realtime_report(property_id)
 
 
-def run_realtime_report(property_id="354244385"):
+def run_realtime_report(property_id):
     """Runs a realtime report on a Google Analytics 4 property."""
     client = BetaAnalyticsDataClient()
 

@@ -1,8 +1,9 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, Blueprint, request, jsonify
 from model import db
 from restful import api 
-from google import analytics
+# from .google import analytics_api, analytics_data_api, analytics_admin_api
+from analytics_data import analytics_data_api
 from serializers import AlchemyEncoder
 from sqlalchemy.sql import text, func
 
@@ -29,7 +30,11 @@ db.init_app(app)
 api.init_app(app)
 
 # regist google analytics blueprint
-app.register_blueprint(analytics)
+google_api = Blueprint('analytics_api', __name__, url_prefix='/api')
+# google_api.register_blueprint(analytics_api)
+google_api.register_blueprint(analytics_data_api)
+# google_api.register_blueprint(analytics_admin_api)
+app.register_blueprint(google_api)
 
 # create the DB on demand
 @app.before_first_request

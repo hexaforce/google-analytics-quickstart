@@ -1,8 +1,8 @@
 from flask import Flask, request
-from flask_restful import Resource, Api, reqparse
+from flask_restx import Resource, Api, reqparse
 from model import db, User
 
-api = Api()
+api = Api(default='Flask', prefix='/api')
 parser = reqparse.RequestParser()
 
 class Index(Resource):
@@ -18,7 +18,7 @@ class Index(Resource):
             )
         return ret, 200
 
-api.add_resource(Index, '/api/user')
+api.add_resource(Index, '/user')
 
 class QueryResource(Resource):
     def get(self):
@@ -29,20 +29,20 @@ class QueryResource(Resource):
             'param': param
         }
 
-api.add_resource(QueryResource, '/api/get')
+api.add_resource(QueryResource, '/get')
 
 class PostResource(Resource):
     def post(self):
         json = request.get_json(force = True)
         return { 'json_request': json }
 
-api.add_resource(PostResource, '/api/post')
+api.add_resource(PostResource, '/post')
 
 class VariableRouting(Resource):
     def get(self, id):
         return { 'id': id }
 
-api.add_resource(VariableRouting, '/api/var/<string:id>')
+api.add_resource(VariableRouting, '/var/<string:id>')
 
 # @app.route("/users")
 # def user_list():

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { GET } from './client'
+import { GET, POST } from './client'
 
 const App = () => {
 
@@ -14,13 +14,40 @@ const App = () => {
     console.log('You clicked submit.');
   }
 
+  const apiUser = async (e) => {
+    const response = await GET('/api/user')
+    if (response.ok) {
+      const body = await response.json();
+      console.log(body)
+    }
+  }
+
+  const apiGet = async (e) => {
+    const response = await GET('/api/get')
+    if (response.ok) {
+      const body = await response.json();
+      console.log(body)
+    }
+  }
+
+  const apiPost = async (e) => {
+    const response = await POST('/api/post', { aaa: 'aaa', bbb: 100, ccc: true })
+    if (response.ok) {
+      const body = await response.json();
+      console.log(body)
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <button onClick={apiUser}>apiUser</button>
         <form onSubmit={handleSubmit}>
           <button type="submit">Submit</button>
         </form>
+        <button onClick={apiGet}>apiGet</button>
+        <button onClick={apiPost}>apiPost</button>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -28,8 +55,8 @@ const App = () => {
           Learn React
         </a>
       </header>
-
     </div>
   );
 }
+
 export default App;

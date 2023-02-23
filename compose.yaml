@@ -32,10 +32,10 @@ services:
   gunicorn-flask:
     build: gunicorn-flask
     restart: always
-    # ports:
-    #   - '8000:8000'
-    expose:
-      - 8000
+    ports:
+      - '8000:8000'
+    # expose:
+    #   - 8000
     depends_on:
       mariadb:
         condition: service_healthy

@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_restx import Resource, Api, reqparse
 from model import db, User
 
-api = Api(default='Flask', prefix='/api')
+api = Api(title='Flask API Server', prefix='/api', default='Flask', default_label='google analytics API', version='1.1')
 parser = reqparse.RequestParser()
 
 class Index(Resource):

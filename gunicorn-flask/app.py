@@ -37,9 +37,9 @@ google_api.register_blueprint(analytics_data_api)
 app.register_blueprint(google_api)
 
 # create the DB on demand
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
 
 # responding to health checks
 @app.route('/flask-health-check')

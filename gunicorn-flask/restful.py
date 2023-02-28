@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restx import Resource, Api, reqparse
-from model import db, User
+from model import db, Actor
 
 api = Api(title='Flask API Server', prefix='/api', default='Flask', default_label='google analytics API', version='1.1')
 parser = reqparse.RequestParser()
@@ -8,17 +8,17 @@ parser = reqparse.RequestParser()
 class Index(Resource):
     def get(self):
         ret = []
-        res = User.query.all()
-        for user in res:
+        res = Actor.query.all()
+        for actor in res:
             ret.append(
                 {
-                    'username': user.username,
-                    'email': user.email
+                    'first_name': actor.first_name,
+                    'last_name': actor.last_name
                 }
             )
         return ret, 200
 
-api.add_resource(Index, '/user')
+api.add_resource(Index, '/actor')
 
 class QueryResource(Resource):
     def get(self):
@@ -46,13 +46,13 @@ api.add_resource(VariableRouting, '/var/<string:id>')
 
 # @app.route("/users")
 # def user_list():
-#     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
+#     users = db.session.execute(db.select(Actor).order_by(Actor.username)).scalars()
 #     return render_template("user/list.html", users=users)
 
 # @app.route("/users/create", methods=["GET", "POST"])
 # def user_create():
 #     if request.method == "POST":
-#         user = User(
+#         user = Actor(
 #             username=request.form["username"],
 #             email=request.form["email"],
 #         )
@@ -64,12 +64,12 @@ api.add_resource(VariableRouting, '/var/<string:id>')
 
 # @app.route("/user/<int:id>")
 # def user_detail(id):
-#     user = db.get_or_404(User, id)
+#     user = db.get_or_404(Actor, id)
 #     return render_template("user/detail.html", user=user)
 
 # @app.route("/user/<int:id>/delete", methods=["GET", "POST"])
 # def user_delete(id):
-#     user = db.get_or_404(User, id)
+#     user = db.get_or_404(Actor, id)
 
 #     if request.method == "POST":
 #         db.session.delete(user)

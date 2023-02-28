@@ -38,7 +38,7 @@ services:
         condition: service_healthy
 
   backend:
-    build: backend
+    build: gunicorn-flask
     restart: always
     expose:
       - 8000
@@ -60,10 +60,10 @@ services:
     command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 app:app
 
   frontend:
-    build: frontend
+    build: nginx-react
     restart: always
     volumes:
-      - ./frontend/default.conf:/tmp/default.conf
+      - ./nginx-react/default.conf:/tmp/default.conf
     environment:
       - FLASK_SERVER_ADDR=backend:8000
     ports:

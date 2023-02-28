@@ -10,7 +10,7 @@ import json
 # https://www.googleapis.com/auth/analytics.manage.users.readonly	Google アナリティクスのユーザー権限の表示。
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-KEY_FILE_LOCATION = 'backend/google/poc-project-378209-692a4ccc16e8.json'
+KEY_FILE_LOCATION = 'gunicorn-flask/google/poc-project-378209-692a4ccc16e8.json'
 credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
 
 VIEW_ID = '284918370'

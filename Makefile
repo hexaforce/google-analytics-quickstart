@@ -12,6 +12,3 @@ clear:
 
 destroy:
 	docker system prune -a --volumes
-
-codegen:
-	docker compose exec -T codegen sqlacodegen mysql+pymysql://root:db-78n9n@127.0.0.1/analytics > models.py

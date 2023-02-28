@@ -37,8 +37,8 @@ services:
       mariadb:
         condition: service_healthy
 
-  gunicorn-flask:
-    build: gunicorn-flask
+  backend:
+    build: backend
     restart: always
     expose:
       - 8000
@@ -59,17 +59,17 @@ services:
       retries: 3
     command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 app:app
 
-  nginx-react:
-    build: nginx-react
+  frontend:
+    build: frontend
     restart: always
     volumes:
-      - ./nginx-react/default.conf:/tmp/default.conf
+      - ./frontend/default.conf:/tmp/default.conf
     environment:
-      - FLASK_SERVER_ADDR=gunicorn-flask:8000
+      - FLASK_SERVER_ADDR=backend:8000
     ports:
       - "80:80"
     depends_on:
-      gunicorn-flask:
+      backend:
         condition: service_healthy
     networks:
       - frontnet

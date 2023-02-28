@@ -9,8 +9,8 @@ RUN apk add curl
 # permissions and nonroot user for tightened security
 RUN adduser -D nonroot
 RUN mkdir /home/app/ && chown -R nonroot:nonroot /home/app
-RUN mkdir -p /var/log/gunicorn-flask && touch /var/log/gunicorn-flask/gunicorn-flask.err.log && touch /var/log/gunicorn-flask/gunicorn-flask.out.log
-RUN chown -R nonroot:nonroot /var/log/gunicorn-flask
+RUN mkdir -p /var/log/backend && touch /var/log/backend/backend.err.log && touch /var/log/backend/backend.out.log
+RUN chown -R nonroot:nonroot /var/log/backend
 WORKDIR /home/app
 USER nonroot
 

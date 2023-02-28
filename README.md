@@ -4,7 +4,7 @@
 pip3 install virtualenv
 virtualenv .venv
 source .venv/bin/activate
-.venv/bin/pip install -r gunicorn-flask/requirements.txt
+.venv/bin/pip install -r backend/requirements.txt
 ```
 
 ```
@@ -12,13 +12,13 @@ docker compose up -d --build
 ```
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS="gunicorn-flask/google/Quickstart-30b4c8d1a1b0.json"
+export GOOGLE_APPLICATION_CREDENTIALS="backend/google/Quickstart-30b4c8d1a1b0.json"
 ```
 
 ```
-python gunicorn-flask/google/analytics_data/snippets/quickstart.py
-python gunicorn-flask/google/HelloAnalytics.py
-python gunicorn-flask/google/HelloAnalyticsV4.py
+python backend/google/analytics_data/snippets/quickstart.py
+python backend/google/HelloAnalytics.py
+python backend/google/HelloAnalyticsV4.py
 ```
 ```
 apt update

@@ -20,7 +20,15 @@ python gunicorn-flask/google/analytics_data/snippets/quickstart.py
 python gunicorn-flask/google/HelloAnalytics.py
 python gunicorn-flask/google/HelloAnalyticsV4.py
 ```
-sqlacodegen mysql+pymysql://root:example@127.0.0.1/sakila > models.py
+```
+apt update
+apt install python3-pip
+
+pip install sqlacodegen==3.0.0rc1
+pip install PyMySQL==1.0.2
+pip install SQLAlchemy==1.4.46
+sqlacodegen mysql+pymysql://root:db-78n9n@127.0.0.1/analytics > models.py
+```
 
 Google アナリティクス Management API は、以下の用途に使用できます。
 

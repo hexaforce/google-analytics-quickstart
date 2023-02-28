@@ -15,7 +15,7 @@ const App = () => {
   }
 
   const apiUser = async (e) => {
-    const response = await GET('/api/user')
+    const response = await GET('/api/actor')
     if (response.ok) {
       const body = await response.json();
       console.log(body)

@@ -37,6 +37,15 @@ services:
       mariadb:
         condition: service_healthy
 
+  codegen:
+    image: db/sqlacodegen
+    restart: always
+    networks:
+      - backnet
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
   backend:
     build: gunicorn-flask
     restart: always

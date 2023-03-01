@@ -1,47 +1,78 @@
 from flask import Flask, Blueprint, request, jsonify
 from google.analytics.admin import AnalyticsAdminServiceClient
 from google.analytics.admin_v1alpha.types import ListPropertiesRequest
-from google.analytics.admin_v1alpha.services.analytics_admin_service.pagers import ListAccountsPager
+from google.analytics.admin_v1alpha.services.analytics_admin_service.pagers import ListFirebaseLinksPager, ListAccountsPager,ListPropertiesPager,ListUserLinksPager,ListDataStreamsPager,ListConversionEventsPager,ListGoogleAdsLinksPager
 
+from google.analytics.admin_v1alpha.types import ListPropertiesRequest
+
+from google.protobuf.json_format import MessageToDict, MessageToJson
 
 analytics_admin_api = Blueprint('analytics_admin_api', __name__, url_prefix='/admin')
 
 
 @analytics_admin_api.route('/list-accounts', methods=['GET'])
-def list_accounts(transport: str = None):
-    client = AnalyticsAdminServiceClient(transport=transport)
+def list_accounts() -> ListAccountsPager:
+    client = AnalyticsAdminServiceClient()
     results = client.list_accounts()
-    print("Result:")
-    for account in results:
-        print(account)
-    return "OK"
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
 
-# def print_account(account: str):
-#     """Prints account data."""
-#     print(f"Resource name: {account.name}")
-#     print(f"Display name: {account.display_name}")
-#     print(f"Region code: {account.region_code}")
-#     print(f"Create time: {account.create_time}")
-#     print(f"Update time: {account.update_time}")
 
-# def list_properties(account_id: str, transport: str = None) -> ListPropertiesPager:
-#     """
-#     Lists Google Analytics 4 properties under the specified parent account
-#     that are available to the current user.
+@analytics_admin_api.route('/list-properties/<account_id>', methods=['GET'])
+def list_properties(account_id: str) -> ListPropertiesPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_properties(
+        ListPropertiesRequest(filter=f"parent:accounts/{account_id}", show_deleted=True)
+    )
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
 
-#     Args:
-#         account_id(str): The Google Analytics account ID.
-#         transport(str): The transport to use. For example, "grpc"
-#             or "rest". If set to None, a transport is chosen automatically.
-#     """
-#     client = AnalyticsAdminServiceClient(transport=transport)
-#     results = client.list_properties(
-#         ListPropertiesRequest(filter=f"parent:accounts/{account_id}", show_deleted=True)
-#     )
 
-#     # print(type(results))
-#     # print("Result:")
-#     # for property_ in results:
-#     #     print(property_)
-#     #     print()
-#     return results
+@analytics_admin_api.route('/list-data-streams/<property_id>', methods=['GET'])
+def list_data_streams(property_id: str)->ListDataStreamsPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_data_streams(parent=f"properties/{property_id}")
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
+
+
+@analytics_admin_api.route('/list-user-links/<property_id>', methods=['GET'])
+def list_user_links(property_id: str) -> ListUserLinksPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_user_links(parent=f"properties/{property_id}")
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
+
+
+@analytics_admin_api.route('/list-firebase-links/<property_id>', methods=['GET'])
+def list_firebase_links(property_id: str) -> ListFirebaseLinksPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_firebase_links(parent=f"properties/{property_id}")
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
+
+
+@analytics_admin_api.route('/list-google-ads-links/<property_id>', methods=['GET'])
+def list_google_ads_links(property_id: str) -> ListGoogleAdsLinksPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_google_ads_links(parent=f"properties/{property_id}")
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
+
+
+@analytics_admin_api.route('/list-conversion-events/<property_id>', methods=['GET'])
+def list_conversion_events(property_id: str) -> ListConversionEventsPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_conversion_events(parent=f"properties/{property_id}")
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)
+
+
+@analytics_admin_api.route('/list-measurement-protocol-secrets/<property_id>/<stream_id>', methods=['GET'])
+def list_measurement_protocol_secrets(property_id: str, stream_id: str) -> ListConversionEventsPager:
+    client = AnalyticsAdminServiceClient()
+    results = client.list_measurement_protocol_secrets(
+        parent=f"properties/{property_id}/dataStreams/{stream_id}"
+    )
+    # print(MessageToJson(results._pb))
+    return MessageToDict(results._pb)

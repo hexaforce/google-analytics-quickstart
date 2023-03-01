@@ -26,6 +26,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN export FLASK_APP=app.py
 RUN pip install -r requirements.txt
 
+ENV GOOGLE_APPLICATION_CREDENTIALS=application-credential.json
+
 # define the port number the container should expose
 # EXPOSE 5001
 

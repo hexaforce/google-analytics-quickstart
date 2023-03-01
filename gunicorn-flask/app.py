@@ -1,9 +1,9 @@
 import os
 from flask import Flask, Blueprint, request, jsonify
-from model import db
-from restful import api 
-# from .google import analytics_api, analytics_data_api, analytics_admin_api
-from analytics_data import analytics_data_api
+from db_models import db
+from db_resource_api import resource_api 
+from analytics_data_api import analytics_data_api
+from analytics_admin_api import analytics_admin_api
 
 from sqlalchemy.sql import text, func
 
@@ -27,13 +27,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db.init_app(app)
 
 # initialize the app with the Resource API extension
-api.init_app(app)
+resource_api.init_app(app)
 
 # regist google analytics blueprint
 google_api = Blueprint('analytics_api', __name__, url_prefix='/api')
-# google_api.register_blueprint(analytics_api)
 google_api.register_blueprint(analytics_data_api)
-# google_api.register_blueprint(analytics_admin_api)
+google_api.register_blueprint(analytics_admin_api)
 app.register_blueprint(google_api)
 
 # create the DB on demand

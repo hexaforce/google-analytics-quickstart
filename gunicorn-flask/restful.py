@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse
 from model import db, Actor
-from serializers import AlchemyEncoder, new_alchemy_encoder
 import json
 
 api = Api(title='Flask API Server', prefix='/api', default='Flask', default_label='google analytics API', version='1.1')
@@ -9,20 +8,6 @@ parser = reqparse.RequestParser()
 
 class Index(Resource):
     def get(self):
-        # ret = []
-        # res = Actor.query.all()
-        # for actor in res:
-        #     ret.append(
-        #         {
-        #             'first_name': actor.first_name,
-        #             'last_name': actor.last_name
-        #         }
-        #     )
-        # print json.dumps(c, cls=AlchemyEncoder)
-        # result = map(lambda c: json.dumps(c, cls=AlchemyEncoder), Actor.query.all())
-        # return list(result), 200
-        # return result, 200
-        # return json.dumps(Actor.query.all(), cls=new_alchemy_encoder(), check_circular=False)
         actors = Actor.query.all()
         return jsonify(actors)
 

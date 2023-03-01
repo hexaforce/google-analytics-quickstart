@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, request, jsonify
 
-from serializers import AlchemyEncoder
+
 from model import db, Actor
 
 analytics_data_api = Blueprint('analytics_data_api', __name__, url_prefix='/analytics-data')

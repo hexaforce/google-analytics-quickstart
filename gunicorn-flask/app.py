@@ -4,7 +4,7 @@ from model import db
 from restful import api 
 # from .google import analytics_api, analytics_data_api, analytics_admin_api
 from analytics_data import analytics_data_api
-from serializers import AlchemyEncoder
+
 from sqlalchemy.sql import text, func
 
 basedir = os.path.abspath(os.path.dirname(__file__))

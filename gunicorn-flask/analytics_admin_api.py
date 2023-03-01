@@ -6,6 +6,7 @@ from google.analytics.admin_v1alpha.services.analytics_admin_service.pagers impo
 from google.analytics.admin_v1alpha.types import ListPropertiesRequest
 
 from google.protobuf.json_format import MessageToDict, MessageToJson
+from flask import current_app
 
 analytics_admin_api = Blueprint('analytics_admin_api', __name__, url_prefix='/admin')
 
@@ -14,7 +15,7 @@ analytics_admin_api = Blueprint('analytics_admin_api', __name__, url_prefix='/ad
 def list_accounts() -> ListAccountsPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_accounts()
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -24,7 +25,7 @@ def list_properties(account_id: str) -> ListPropertiesPager:
     results = client.list_properties(
         ListPropertiesRequest(filter=f"parent:accounts/{account_id}", show_deleted=True)
     )
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -32,7 +33,7 @@ def list_properties(account_id: str) -> ListPropertiesPager:
 def list_data_streams(property_id: str)->ListDataStreamsPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_data_streams(parent=f"properties/{property_id}")
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -40,7 +41,7 @@ def list_data_streams(property_id: str)->ListDataStreamsPager:
 def list_user_links(property_id: str) -> ListUserLinksPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_user_links(parent=f"properties/{property_id}")
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -48,7 +49,7 @@ def list_user_links(property_id: str) -> ListUserLinksPager:
 def list_firebase_links(property_id: str) -> ListFirebaseLinksPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_firebase_links(parent=f"properties/{property_id}")
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -56,7 +57,7 @@ def list_firebase_links(property_id: str) -> ListFirebaseLinksPager:
 def list_google_ads_links(property_id: str) -> ListGoogleAdsLinksPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_google_ads_links(parent=f"properties/{property_id}")
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -64,7 +65,7 @@ def list_google_ads_links(property_id: str) -> ListGoogleAdsLinksPager:
 def list_conversion_events(property_id: str) -> ListConversionEventsPager:
     client = AnalyticsAdminServiceClient()
     results = client.list_conversion_events(parent=f"properties/{property_id}")
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)
 
 
@@ -74,5 +75,5 @@ def list_measurement_protocol_secrets(property_id: str, stream_id: str) -> ListC
     results = client.list_measurement_protocol_secrets(
         parent=f"properties/{property_id}/dataStreams/{stream_id}"
     )
-    # print(MessageToJson(results._pb))
+    current_app.logger.info(MessageToJson(results._pb))
     return MessageToDict(results._pb)

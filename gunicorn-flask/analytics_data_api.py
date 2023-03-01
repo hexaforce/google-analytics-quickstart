@@ -8,6 +8,7 @@ from google.analytics.data_v1beta.types import (
 )
 import os
 import json
+from flask import current_app
 
 analytics_data_api = Blueprint('analytics_data_api', __name__, url_prefix='/data')
 
@@ -22,6 +23,7 @@ def run_report():
     # print(f"client_email: {client_email}")
 
     req = request.json
+    current_app.logger.info(req)
 
     client = BetaAnalyticsDataClient()
 

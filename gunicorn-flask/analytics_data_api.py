@@ -36,11 +36,8 @@ def run_report(property_id: str):
     response = client.run_report(
       RunReportRequest(
         property=f"properties/{property_id}",
-        # dimensions=[Dimension(name="browser")],
         dimensions=[Dimension(name=dimension_name)],
-        # metrics=[Metric(name="screenPageViews")],
         metrics=[Metric(name=metric_name)],
-        # date_ranges=[DateRange(start_date="14daysAgo", end_date="today")],
         date_ranges=[DateRange(start_date=start_date, end_date=end_date)],
       )
     )

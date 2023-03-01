@@ -2,14 +2,19 @@ from sqlalchemy import CHAR, Column, DECIMAL, DateTime, Enum, ForeignKeyConstrai
 from sqlalchemy.dialects.mysql import INTEGER, MEDIUMINT, MEDIUMTEXT, SET, SMALLINT, TINYINT, VARCHAR, YEAR
 from sqlalchemy.orm import declarative_base, relationship
 from flask_sqlalchemy import SQLAlchemy
+from dataclasses import dataclass
 
 db = SQLAlchemy()
 
 Base = declarative_base()
 metadata = Base.metadata
 
+@dataclass
 class Actor(db.Model):
     __tablename__ = 'actor'
+
+    first_name: str
+    last_name: str
 
     actor_id = Column(SMALLINT(5), primary_key=True)
     first_name = Column(String(45), nullable=False)

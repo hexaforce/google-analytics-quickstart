@@ -9,36 +9,41 @@ from google.analytics.data_v1beta.types import (
 import os
 import json
 from flask import current_app
+# from flaskr.db import get_db
+# db = get_db()
+
+from google.protobuf.json_format import MessageToDict, MessageToJson
 
 analytics_data_api = Blueprint('analytics_data_api', __name__, url_prefix='/data')
 
-@analytics_data_api.route('/run-report', methods=['POST'])
-def run_report():
+@analytics_data_api.route('/run-report/<property_id>', methods=['POST'])
+def run_report(property_id: str):
 
-    # GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "client_secrets.json")
-    # json_open = open(GOOGLE_APPLICATION_CREDENTIALS, 'r')
-    # json_load = json.load(json_open)
-    # client_email = json_load['client_email']
+    client_email = json.load(open(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"), 'r'))['client_email']
+    print(f"client_email: {client_email}", flush=True)
 
-    # print(f"client_email: {client_email}")
+    print(f"property_id: {property_id}", flush=True)
+    post = request.json
+    print(f"request: {post}", flush=True)
 
-    req = request.json
-    current_app.logger.info(req)
+    dimension_name = post['dimension_name']
+    metric_name = post['metric_name']
+    start_date = post['start_date']
+    end_date = post['end_date']
 
     client = BetaAnalyticsDataClient()
 
-    request = RunReportRequest(
-        property=f"properties/{req.property_id}",
+    response = client.run_report(
+      RunReportRequest(
+        property=f"properties/{property_id}",
         # dimensions=[Dimension(name="browser")],
-        dimensions=[Dimension(name=req.Dimension)],
+        dimensions=[Dimension(name=dimension_name)],
         # metrics=[Metric(name="screenPageViews")],
-        metrics=[Metric(name=req.Metric)],
+        metrics=[Metric(name=metric_name)],
         # date_ranges=[DateRange(start_date="14daysAgo", end_date="today")],
-        date_ranges=[DateRange(start_date=req.start_date, end_date=req.end_date)],
+        date_ranges=[DateRange(start_date=start_date, end_date=end_date)],
+      )
     )
 
-    response = client.run_report(request)
-    # print("################### Report result:")
-    # for row in response.rows:
-    #     print(row.dimension_values[0].value, row.metric_values[0].value)
-    return response
+    print(f"response: {MessageToJson(response._pb)}", flush=True)
+    return MessageToDict(response._pb)

@@ -38,10 +38,21 @@ const App = () => {
     }
   }
 
+  const runReport = async (e) => {
+    const response = await POST('/api/data/run-report/354244385', { dimension_name: 'browser', metric_name: 'screenPageViews', start_date: '14daysAgo', end_date: 'today' })
+    if (response.ok) {
+      const body = await response.json();
+      console.log(body)
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+
+        <button onClick={runReport}>runReport</button>
+
         <button onClick={apiUser}>apiUser</button>
         <form onSubmit={handleSubmit}>
           <button type="submit">Submit</button>

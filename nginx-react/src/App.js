@@ -1,6 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
 import { GET, POST } from './client'
+
+import Metric from './Metric'
+import Dimension from './Dimension'
+
+import { Button, Stack, Dropdown, ListGroup, OverlayTrigger, Tooltip, Container, Row, Col } from 'react-bootstrap';
 
 const App = () => {
 
@@ -46,28 +49,41 @@ const App = () => {
     }
   }
 
+  const runReporta = async (e) => {
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
 
-        <button onClick={runReport}>runReport</button>
+    <Container>
+      <Row variant="success">
+        <Col sm={8}>sm=8</Col>
+        <Col sm={4}>sm=4</Col>
+      </Row>
+      <Row>
+        <Col sm>
+          <ListGroup>
+            {Metric.map((e, i) => <OverlayTrigger overlay={<Tooltip>{e.説明}</Tooltip>}>
+              <ListGroup.Item key={i} action variant="light">{`${e.ui_name} (${e.UI名})`}</ListGroup.Item>
+            </OverlayTrigger>
+            )}
+          </ListGroup>
+        </Col>
+        <Col sm>
+          <ListGroup>
+            {Dimension.map((e, i) => <OverlayTrigger overlay={<Tooltip>{e.説明}</Tooltip>}>
+              <ListGroup.Item key={i} action variant="light">{`${e.ui_name} (${e.UI名})`}</ListGroup.Item>
+            </OverlayTrigger>
+            )}
+          </ListGroup>
+        </Col>
+      </Row>
+    </Container>
 
-        <button onClick={apiUser}>apiUser</button>
-        <form onSubmit={handleSubmit}>
-          <button type="submit">Submit</button>
-        </form>
-        <button onClick={apiGet}>apiGet</button>
-        <button onClick={apiPost}>apiPost</button>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
   );
 }
+
+
+
 
 export default App;

@@ -9,8 +9,6 @@ from google.analytics.data_v1beta.types import (
 import os
 import json
 from flask import current_app
-# from flaskr.db import get_db
-# db = get_db()
 
 from google.protobuf.json_format import MessageToDict, MessageToJson
 

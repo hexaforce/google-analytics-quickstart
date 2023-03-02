@@ -1,40 +1,40 @@
 /* eslint-disable */
 // import './AnalyticsAdmin.css'
 
+import { GET, POST } from './HttpClient'
+import React, { useEffect, useState, useRef } from 'react';
 
 import Table from 'react-bootstrap/Table';
 
 const AnalyticsAdmin = () => {
+
+  const [accounts, setAccounts] = useState();
+  const [colNames, setColNames] = useState();
+
+  useEffect(async () => {
+    const response = await GET('/api/admin/list-accounts')
+    if (response.ok) {
+      const body = await response.json();
+      // console.log(body.accounts)
+      setAccounts(body.accounts)
+      if (body.accounts.length > 0)
+        setColNames(Object.keys(body.accounts[0]))
+    }
+  }, []);
+
   return (
-    <Table className='m-5' striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
+    <>
+      {colNames && <Table className='m-5' striped bordered hover>
+        <thead>
+          <tr>
+            {colNames.map(colName => <th key={colName}>{colName}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {accounts.map((row, i) => <tr key={i}>{colNames.map((colName, i) => <td key={i}>{row[colName]}</td>)} </tr>)}
+        </tbody>
+      </Table>}
+    </>
   );
 }
 

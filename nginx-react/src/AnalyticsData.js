@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { GET, POST } from './HttpClient'
 
 import Metric from './AnalyticsDataMetric'

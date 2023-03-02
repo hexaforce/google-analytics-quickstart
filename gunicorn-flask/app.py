@@ -50,7 +50,7 @@ def flask_health_check():
 
 # responding to server env setting
 @app.route('/api/info')
-def flask_health_check():
+def server_info():
   application_credential = json.load(open(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"), 'r'))
   return {
      'project_id': application_credential['project_id'],

@@ -1,14 +1,14 @@
 upf:
-	COMPOSE_PROJECT_NAME=GA docker compose up --build
+	COMPOSE_PROJECT_NAME=ga docker compose up --build
 
 up:
-	COMPOSE_PROJECT_NAME=GA docker compose up -d --build
+	COMPOSE_PROJECT_NAME=ga docker compose up -d --build
 
 down:
-	COMPOSE_PROJECT_NAME=GA docker compose down
+	COMPOSE_PROJECT_NAME=ga docker compose down
 
 clear:
-	docker volume rm GA_db-data
+	docker volume rm ga_db-data
 
 destroy:
 	docker system prune -a --volumes

@@ -1,4 +1,4 @@
-import { GET, POST } from './client'
+import { GET, POST } from './HttpClient'
 
 import Metric from './Metric'
 import Dimension from './Dimension'
@@ -6,47 +6,9 @@ import Dimension from './Dimension'
 import { Button, Stack, Dropdown, Form, ListGroup, OverlayTrigger, Tooltip, Container, Row, Col } from 'react-bootstrap';
 import React, { useState, useRef } from 'react';
 
-
 import './AnalyticsData.css'
 
-
-
-const App = () => {
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const response = await GET('/api/analytics-data/flask-health-check')
-  //   if (response.ok) {
-  //     const body = await response.json();
-  //     console.log(body)
-  //   }
-  //   console.log('You clicked submit.');
-  // }
-
-  // const apiUser = async (e) => {
-  //   const response = await GET('/api/actor')
-  //   if (response.ok) {
-  //     const body = await response.json();
-  //     console.log(body)
-  //   }
-  // }
-
-  // const apiGet = async (e) => {
-  //   const response = await GET('/api/get')
-  //   if (response.ok) {
-  //     const body = await response.json();
-  //     console.log(body)
-  //   }
-  // }
-
-  // const apiPost = async (e) => {
-  //   const response = await POST('/api/post', { aaa: 'aaa', bbb: 100, ccc: true })
-  //   if (response.ok) {
-  //     const body = await response.json();
-  //     console.log(body)
-  //   }
-  // }
-
+const AnalyticsData = () => {
 
   const [property_id, setPropertyId] = useState('');
   const [dimension_name, setDimensionName] = useState('deviceModel');
@@ -87,7 +49,7 @@ const App = () => {
   }
 
   return (
-    <Form>
+    <Form className='m-3' >
       <Form.Group className="m-3">
         <Form.Label>PropertyId</Form.Label>
         <Form.Control type="property_id" placeholder="Property ID" onChange={onPropertyId} />
@@ -127,4 +89,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default AnalyticsData;

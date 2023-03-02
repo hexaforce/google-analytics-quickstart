@@ -1,14 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+
+
+
+import AnalyticsAdmin from './AnalyticsAdmin';
+import AnalyticsData from './AnalyticsData';
+
 import reportWebVitals from './reportWebVitals';
 
+import { Button, Stack, Dropdown, Form, ListGroup, OverlayTrigger, Tooltip, Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>,
+  },
+  {
+    path: "/admin",
+    element: <AnalyticsAdmin />,
+  },
+  {
+    path: "/data",
+    element: <AnalyticsData />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Google Analytics API Test</Navbar.Brand>
+        <Nav.Link href="/admin">AdminAPI</Nav.Link>
+        <Nav.Link href="/data">DataAPI</Nav.Link>
+      </Container>
+    </Navbar>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

@@ -1,7 +1,7 @@
 import { GET, POST } from './HttpClient'
 
-import Metric from './Metric'
-import Dimension from './Dimension'
+import Metric from './AnalyticsDataMetric'
+import Dimension from './AnalyticsDataDimension'
 
 import { Button, Stack, Dropdown, Form, ListGroup, OverlayTrigger, Tooltip, Container, Row, Col } from 'react-bootstrap';
 import React, { useState, useRef } from 'react';

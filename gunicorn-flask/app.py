@@ -1,10 +1,12 @@
 import os
+import json
 from flask import Flask, Blueprint, request, jsonify
 from db_models import db
 from db_resource_api import resource_api 
 from analytics_data_api import analytics_data_api
 from analytics_admin_api import analytics_admin_api
-
+from google.analytics.data_v1beta import gapic_version as data_v1beta_package_version
+from google.analytics.admin_v1alpha import gapic_version as admin_v1alpha_package_version
 from sqlalchemy.sql import text, func
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -45,6 +47,18 @@ def create_tables():
 def flask_health_check():
   db.session.execute(text('SELECT now()'))
   return "success"
+
+# responding to server env setting
+@app.route('/api/info')
+def flask_health_check():
+  application_credential = json.load(open(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"), 'r'))
+  return {
+     'project_id': application_credential['project_id'],
+     'client_id': application_credential['client_id'],
+     'client_email': application_credential['client_email'],
+     'admin_v1alpha_package_version': admin_v1alpha_package_version.__version__,
+     'data_v1beta_package_version': data_v1beta_package_version.__version__,
+  }
 
 if __name__ == '__main__':
     app.run(debug = True)

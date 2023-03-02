@@ -6,8 +6,7 @@ from google.analytics.data_v1beta.types import (
     Metric,
     RunReportRequest,
 )
-import os
-import json
+
 from flask import current_app
 
 from google.protobuf.json_format import MessageToDict, MessageToJson
@@ -16,9 +15,6 @@ analytics_data_api = Blueprint('analytics_data_api', __name__, url_prefix='/data
 
 @analytics_data_api.route('/run-report/<property_id>', methods=['POST'])
 def run_report(property_id: str):
-
-    client_email = json.load(open(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"), 'r'))['client_email']
-    print(f"client_email: {client_email}", flush=True)
 
     print(f"property_id: {property_id}", flush=True)
     post = request.json

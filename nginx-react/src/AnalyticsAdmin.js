@@ -37,7 +37,11 @@ const AnalyticsAdmin = () => {
               if (response3.ok) {
                 const body3 = await response3.json();
                 if ('dataStreams' in body3) {
-                  property.dataStreams = body3.dataStreams
+                  const dataStreams = []
+                  for (const dataStream of body3.dataStreams) {
+                    dataStreams.push(`${dataStream.displayName}(${dataStream.webStreamData.defaultUri})`)
+                  }
+                  property.dataStreams = dataStreams.join('/')
                 }
               }
               properties_temp.push(property)
@@ -46,12 +50,12 @@ const AnalyticsAdmin = () => {
         }
       }
       setProperties(properties_temp)
-      setPropertiesColNames(["name", "parent", "displayName", "industryCategory", "timeZone", "currencyCode", "serviceLevel", "account", "propertyType", "createTime", "updateTime", "deleteTime", "expireTime"])
+      setPropertiesColNames(["name", "account", "displayName", "dataStreams", "createTime", "updateTime", "deleteTime", "expireTime"])
     }
   }, []);
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col>
           <Card>

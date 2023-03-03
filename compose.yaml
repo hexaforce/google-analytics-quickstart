@@ -1,9 +1,7 @@
 services:
-  db:
-    # We use a mariadb image which supports both amd64 & arm64 architecture
-    image: mariadb:10.10
-    # If you really want to use MySQL, uncomment the following line
-    #image: mysql:8
+
+  mariadb:
+    image: mariadb
     command: '--default-authentication-plugin=mysql_native_password'
     restart: always
     healthcheck:
@@ -18,46 +16,75 @@ services:
     secrets:
       - db-password
     environment:
-      - MYSQL_DATABASE=example
+      - MYSQL_DATABASE=analytics
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
-    ports:
-      - 3306:3306
-      - 33060:33060
-    # expose:
-    #   - 3306
-    #   - 33060
+    expose:
+      - 3306
+      - 33060
     networks:
       - backnet
     volumes:
       - db-data:/var/lib/mysql
 
-  backend:
-    build:
-      context: backend
-      target: builder
+  adminer:
+    image: adminer
     restart: always
-    secrets:
-      - db-password
     ports:
-      - 8000:8000
+      - 8080:8080
+    networks:
+      - backnet
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  backend:
+    build: gunicorn-flask
+    restart: always
     # expose:
     #   - 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      mariadb:
+        condition: service_healthy
     networks:
       - backnet
       - frontnet
-    depends_on:
-      db:
-        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --silent --fail localhost:8000/flask-health-check || exit 1"
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 app:app
 
-  proxy:
-    build: proxy
+  frontend:
+    build: nginx-react
     restart: always
+    volumes:
+      - ./nginx-react/default.conf:/tmp/default.conf
+    environment:
+      - FLASK_SERVER_ADDR=backend:8000
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
       - frontnet
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --silent --fail localhost:80/health-check || exit 1"
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    command: /app/start.sh
 
 volumes:
   db-data:
@@ -65,7 +92,7 @@ volumes:
 
 secrets:
   db-password:
-    file: db-password.txt
+    file: db/password.txt
 
 networks:
   backnet:

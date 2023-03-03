@@ -39,7 +39,7 @@ const AnalyticsAdmin = () => {
                 if ('dataStreams' in body3) {
                   const dataStreams = []
                   for (const dataStream of body3.dataStreams) {
-                    dataStreams.push(`${dataStream.displayName}(${dataStream.webStreamData.defaultUri})`)
+                    dataStreams.push(`${dataStream.name}(${dataStream.displayName})`)
                   }
                   property.dataStreams = dataStreams.join('/')
                 }
